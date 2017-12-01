@@ -52,15 +52,33 @@
 
  */
 
-package ru.jollydroid.daggerminihowto
+package ru.jollydroid.daggerminihowto.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import dagger.android.support.DaggerAppCompatActivity
+import ru.jollydroid.daggerminihowto.R
+import ru.jollydroid.daggerminihowto.model.DummyObject
+import javax.inject.Inject
+import javax.inject.Named
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity() {
+    @Inject
+    @field:Named("Long Live")
+    lateinit var longLive: DummyObject
+
+    @Inject
+    @field:Named("One Time")
+    lateinit var oneTime: DummyObject
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        longLive.ping()
+        oneTime.ping()
     }
 }
